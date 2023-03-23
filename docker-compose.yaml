@@ -1,0 +1,53 @@
+version: '3.1'
+
+services:
+
+  joomla:
+    container_name: servidor_joomla
+    image: joomla
+    restart: always
+    environment:
+      JOOMLA_DB_HOST: dbjoomla
+      JOOMLA_DB_USER: user_joomla
+      JOOMLA_DB_PASSWORD: asdasd
+      JOOMLA_DB_NAME: bd_joomla
+    ports:
+      - 8081:80
+
+  dbjoomla:
+    container_name: db_joomla
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: bd_joomla
+      MYSQL_USER: user_joomla
+      MYSQL_PASSWORD: asdasd
+      MYSQL_ROOT_PASSWORD: asdasd
+
+  nextcloud:
+    container_name: servidor_nextcloud
+    image: nextcloud
+    restart: always
+    environment:
+      MYSQL_HOST: dbnextcloud
+      MYSQL_USER: user_nextcloud
+      MYSQL_PASSWORD: asdasd
+      MYSQL_DATABASE: bd_nextcloud
+    ports:
+      - 8082:80
+
+  dbnextcloud:
+    container_name: db_nextcloud
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: bd_nextcloud
+      MYSQL_USER: user_nextcloud
+      MYSQL_PASSWORD: asdasd
+      MYSQL_ROOT_PASSWORD: asdasd
+
+  nginx-base:
+    image: nginx:latest
+    container_name: nginx-base
+    ports:
+      - "80:80"
